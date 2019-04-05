@@ -2,7 +2,7 @@
   "exp_name": "vgg_manga",
   "lr": 0.001,
   "decay": 0.0,
-  "num_epochs": 10,
+  "num_epochs": 5000,
   "batch_size": 64,
   "num_classes": 200,
   "manga109_dir": "/Users/patrick/Documents/datasets/Manga109_2017_09_28"
