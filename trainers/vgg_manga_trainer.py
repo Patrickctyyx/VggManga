@@ -7,6 +7,8 @@ from sklearn.metrics import precision_recall_fscore_support
 from bases.trainer_base import TrainerBase
 import numpy as np
 
+from utils.np_utils import prp_2_oh_array
+
 
 class VGGMangaTrainer(TrainerBase):
 
@@ -39,7 +41,7 @@ class VGGMangaTrainer(TrainerBase):
             )
         )
 
-        self.callbacks.append(FPRMetricDetail(self.data[1], self.config.batch_size))
+        self.callbacks.append(FPRMetricDetail(self.data[1], self.config.batch_size, self.config.num_classes))
 
     def train(self):
         history = self.model.fit_generator(
@@ -60,25 +62,24 @@ class FPRMetricDetail(tf.keras.callbacks.Callback):
     """
     Output F, P, R
     """
-    def __init__(self, val_data, batch_size):
+    def __init__(self, val_data, batch_size, num_classea):
         super().__init__()
         self.validation_data = val_data
         self.batch_size = batch_size
+        self.num_classes = num_classea
 
     def on_epoch_end(self, batch, logs=None):
         batches = len(self.validation_data)
         total = batches * self.batch_size
 
-        val_pred = np.zeros((total, 1))
-        val_true = np.zeros(total)
+        val_pred = np.zeros((total, self.num_classes))
+        val_true = np.zeros((total, self.num_classes))
 
         for single_batch in range(batches):
             val_x, val_y = next(self.validation_data)
             val_pred[single_batch * self.batch_size: (single_batch + 1) * self.batch_size] = \
-                np.asarray(self.model.predict(val_x)).round()
+                prp_2_oh_array(np.asarray(self.model.predict(val_x)))
             val_true[single_batch * self.batch_size: (single_batch + 1) * self.batch_size] = val_y
-
-        val_pred = np.squeeze(val_pred)
 
         warnings.filterwarnings('ignore', category=UndefinedMetricWarning)
         precision, recall, f_score, support = precision_recall_fscore_support(val_true, val_pred)
