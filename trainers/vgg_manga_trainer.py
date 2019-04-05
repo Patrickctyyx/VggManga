@@ -71,15 +71,21 @@ class FPRMetricDetail(tf.keras.callbacks.Callback):
     def on_epoch_end(self, batch, logs=None):
         batches = len(self.validation_data)
         total = batches * self.batch_size
+        real_total = 0
 
         val_pred = np.zeros((total, self.num_classes))
         val_true = np.zeros((total, self.num_classes))
 
         for single_batch in range(batches):
             val_x, val_y = next(self.validation_data)
-            val_pred[single_batch * self.batch_size: (single_batch + 1) * self.batch_size] = \
+            row_num = val_x.shape[0]
+            real_total += total
+            val_pred[single_batch * self.batch_size: single_batch * self.batch_size + row_num] = \
                 prp_2_oh_array(np.asarray(self.model.predict(val_x)))
-            val_true[single_batch * self.batch_size: (single_batch + 1) * self.batch_size] = val_y
+            val_true[single_batch * self.batch_size: single_batch * self.batch_size + row_num] = val_y
+
+        val_pred = val_pred[:real_total, :]
+        val_true = val_true[:real_total, :]
 
         warnings.filterwarnings('ignore', category=UndefinedMetricWarning)
         precision, recall, f_score, support = precision_recall_fscore_support(val_true, val_pred)
