@@ -37,14 +37,14 @@ def train_vgg_manga():
     else:
         model = VGGMangaModel(config=config)
 
-    # print('[INFO] 训练网络')
-    # trainer = VGGMangaTrainer(
-    #     model=model.model,
-    #     data=[dl.get_train_data(), dl.get_validation_data()],
-    #     config=config
-    # )
-    # trainer.train()
-    # print('[INFO] 训练完成…')
+    print('[INFO] 训练网络')
+    trainer = VGGMangaTrainer(
+        model=model.model,
+        data=[dl.get_train_data(), dl.get_validation_data()],
+        config=config
+    )
+    trainer.train()
+    print('[INFO] 训练完成…')
 
 
 if __name__ == "__main__":
