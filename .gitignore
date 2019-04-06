@@ -111,6 +111,9 @@ venv.bak/
 # data
 experiments/
 manga109/
+selective_search_imgs/
 
 # test
 test_fine_tune.py
+notebooks/
+*.ipynb

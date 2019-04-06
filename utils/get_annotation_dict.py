@@ -54,11 +54,11 @@ def get_annotation_dict(annotation_type='face', threshold_num=70, dict_len=200,
 
         for i in range(len(pages)):
             page = pages[i]
-            if 'face' not in page:
+            if annotation_type not in page:
                 continue
             # 不止有一个 face
-            if type(page['face']) is type([]):
-                for face in page['face']:
+            if type(page[annotation_type]) is type([]):
+                for face in page[annotation_type]:
                     temp_dict = dict()
                     temp_dict['@page'] = i
                     temp_dict['@xmax'] = face['@xmax']
@@ -78,7 +78,7 @@ def get_annotation_dict(annotation_type='face', threshold_num=70, dict_len=200,
                 characters_count[page['face']['@character']]['@count'] += 1
 
         for key, val in characters_count.items():
-            if val['@count'] >= 70:
+            if val['@count'] >= threshold_num:
                 all_characters[key] = val
 
     ordered_characters = OrderedDict()
