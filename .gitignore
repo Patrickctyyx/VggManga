@@ -113,6 +113,9 @@ experiments/
 manga109/
 selective_search_imgs/
 
+# logs
+logs/
+
 # test
 test_fine_tune.py
 notebooks/
