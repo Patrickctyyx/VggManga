@@ -111,3 +111,6 @@ venv.bak/
 # data
 experiments/
 manga109/
+
+# test
+test_fine_tune.py
