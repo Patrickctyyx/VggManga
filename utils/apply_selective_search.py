@@ -10,6 +10,9 @@ def apply_selective_search(manga109_path, target_path, threshold_pixels=2000, th
         if single_manga.startswith('.'):
             continue
         single_manga_path = os.path.join(manga109_path, 'images', single_manga)
+        # to make it possible that many programs can be running at the same time
+        if os.path.exists(os.path.join(target_path, single_manga)):
+            continue
         mkdir_if_not_exist(os.path.join(target_path, single_manga))
         pages = os.listdir(single_manga_path)
         for page in pages:
