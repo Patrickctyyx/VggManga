@@ -46,10 +46,8 @@ def apply_selective_search(manga109_path, target_path, threshold_pixels=2000, th
                                          page_num + '_%04d.jpg' % i), img[y: y + h, x: x + w])
                 i += 1
 
-            return
-
 
 if __name__ == '__main__':
-    manga109_path = '/Users/patrick/Documents/datasets/Manga109_2017_09_28'
-    target_path = '/Users/patrick/Desktop/VggManga/selective_search_imgs'
+    manga109_path = '/home/patrick/Manga109_2017_09_28'
+    target_path = '/home/patrick/VggManga/selective_search_imgs'
     apply_selective_search(manga109_path, target_path)
