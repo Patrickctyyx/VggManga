@@ -1,0 +1,8 @@
+{
+  "exp_name": "vgg_manga_simpel_face",
+  "lr": 0.001,
+  "decay": 0.0,
+  "num_epochs": 50,
+  "batch_size": 32,
+  "num_classes": 2
+}

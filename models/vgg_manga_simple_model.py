@@ -32,7 +32,7 @@ class VGGMangaSimpleModel(ModelBase):
         # fc layers
         x = tf.keras.layers.Flatten(name='flatten')(layer_3)
         x = tf.keras.layers.Dense(64, activation='relu', name='fc1')(x)
-        x = tf.keras.layers.Dropout(0.5)(x)
+#         x = tf.keras.layers.Dropout(0.5)(x)
         predictions = tf.keras.layers.Dense(2, activation='sigmoid', name='fc2')(x)
 
         model = tf.keras.models.Model(inputs=main_input, outputs=predictions)

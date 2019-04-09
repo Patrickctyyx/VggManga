@@ -3,6 +3,6 @@
   "lr": 0.001,
   "decay": 0.0,
   "num_epochs": 50,
-  "batch_size": 64,
+  "batch_size": 128,
   "num_classes": 2
 }
