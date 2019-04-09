@@ -1,0 +1,8 @@
+{
+  "exp_name": "vgg_manga",
+  "lr": 0.001,
+  "decay": 0.0,
+  "num_epochs": 50,
+  "batch_size": 64,
+  "num_classes": 2
+}

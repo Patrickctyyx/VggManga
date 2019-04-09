@@ -123,3 +123,4 @@ logs/
 test_fine_tune.py
 notebooks/
 *.ipynb
+utils/mk_dirs.py

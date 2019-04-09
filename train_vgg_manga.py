@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from data_loaders.vgg_manga_dl import VGGMangaDL
-from models.vgg_manga_model import VGGMangaModel
+from models.vgg_manga_simple_model import VGGMangaSimpleModel
 from trainers.vgg_manga_trainer import VGGMangaTrainer
 from utils.config_utils import process_config, get_train_args
 import numpy as np
@@ -10,6 +10,7 @@ import numpy as np
 
 def train_vgg_manga():
 
+    manga_dir = '/Users/patrick/Documents/datasets/manga109_frame_face'
     print('[INFO] 解析配置…')
     parser = None
     config = None
@@ -29,13 +30,13 @@ def train_vgg_manga():
     np.random.seed(47)
 
     print('[INFO] 加载数据…')
-    dl = VGGMangaDL(config=config)
+    dl = VGGMangaDL(config=config, manga_dir=manga_dir)
 
     print('[INFO] 构造网络…')
     if model_path != 'None':
-        model = VGGMangaModel(config=config, model_path=model_path)
+        model = VGGMangaSimpleModel(config=config, model_path=model_path)
     else:
-        model = VGGMangaModel(config=config)
+        model = VGGMangaSimpleModel(config=config)
 
     print('[INFO] 训练网络')
     trainer = VGGMangaTrainer(

@@ -22,7 +22,9 @@ class VGGMangaModel(ModelBase):
         x = base_model.output
         x = tf.keras.layers.Flatten(name='flatten')(x)
         x = tf.keras.layers.Dense(4096, activation='relu', name='fc1')(x)
+        x = tf.keras.layers.Dropout(0.5)(x)
         x = tf.keras.layers.Dense(4096, activation='relu', name='fc2')(x)
+        x = tf.keras.layers.Dropout(0.5)(x)
         predictions = tf.keras.layers.Dense(self.config.num_classes, activation='softmax', name='predictions')(x)
 
         model = tf.keras.models.Model(inputs=base_model.input, outputs=predictions)
