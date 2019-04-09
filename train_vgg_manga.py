@@ -49,4 +49,6 @@ def train_vgg_manga():
 
 
 if __name__ == "__main__":
+    import os
+    os.environ["CUDA_VISIBLE_DEVICES"] = "1,2,3"
     train_vgg_manga()
