@@ -18,7 +18,7 @@ class VGGMangaDL(DataLoaderBase):
             horizontal_flip=True
         )
         train_generator = train_datagen.flow_from_directory(
-            os.path.join(self.root_path, 'manga109/train'),
+            os.path.join(self.root_path, 'manga109_face/train'),
             target_size=(224, 224),
             batch_size=self.config.batch_size
         )
@@ -29,7 +29,7 @@ class VGGMangaDL(DataLoaderBase):
             rescale=1. / 255
         )
         test_generator = test_datagen.flow_from_directory(
-            os.path.join(self.root_path, 'manga109/test'),
+            os.path.join(self.root_path, 'manga109_face/test'),
             target_size=(224, 224),
             batch_size=self.config.batch_size
         )
@@ -40,7 +40,7 @@ class VGGMangaDL(DataLoaderBase):
             rescale=1. / 255
         )
         val_generator = val_datagen.flow_from_directory(
-            os.path.join(self.root_path, 'manga109/validation'),
+            os.path.join(self.root_path, 'manga109_face/validation'),
             target_size=(224, 224),
             batch_size=self.config.batch_size
         )

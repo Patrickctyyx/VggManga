@@ -5,9 +5,11 @@ from utils.utils import mkdir_if_not_exist
 from utils.get_annotation_dict import get_annotation_dict
 
 manga109_dir = '/Users/patrick/Documents/datasets/Manga109_2017_09_28'
-target_train_dir = '../manga109/train'
-target_test_dir = '../manga109/test'
-annotation_list = get_annotation_dict(return_list=True)
+target_train_dir = 'manga109_body/train'
+target_test_dir = 'manga109_body/test'
+target_validation_dir = 'manga109_body/validation'
+annotation_list = get_annotation_dict(annotation_type='body', return_list=True)
+print('start running')
 
 for anno in annotation_list:
     for cnt in range(anno[1]['@count']):
@@ -16,6 +18,8 @@ for anno in annotation_list:
         save_img_path = None
         if cnt % 5 == 0:  # test path
             save_img_path = os.path.join(target_test_dir, anno[0] + '_%03d.jpg' % cnt)
+        elif cnt % 5 == 1:
+            save_img_path = os.path.join(target_validation_dir, anno[0] + '_%03d.jpg' % cnt)
         else:
             save_img_path = os.path.join(target_train_dir, anno[0] + '_%03d.jpg' % cnt)
         img = cv2.imread(origin_img_path, 0)
@@ -23,8 +27,8 @@ for anno in annotation_list:
                          anno[1]['elements'][cnt]['@xmin']: anno[1]['elements'][cnt]['@xmax']]
         cv2.imwrite(save_img_path, crop_image)
 
-img_dir = '../manga109'
-for subdir in ['train', 'test']:
+img_dir = 'manga109_body'
+for subdir in ['train', 'test', 'validation']:
     dir_name = os.path.join(img_dir, subdir)
     imgs = os.listdir(dir_name)
 

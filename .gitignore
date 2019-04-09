@@ -110,7 +110,10 @@ venv.bak/
 
 # data
 experiments/
-manga109/
+manga109_face/
+manga109_body/
+manga109_frame_body/
+manga109_frame_face/
 selective_search_imgs/
 
 # logs
