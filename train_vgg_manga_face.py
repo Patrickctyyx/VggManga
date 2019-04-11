@@ -34,9 +34,9 @@ def train_vgg_manga():
 
     print('[INFO] 构造网络…')
     if model_path != 'None':
-        model = VGGMangaModel(config=config, model_path=model_path)
+        model = VGGMangaModel(config=config, model_path=model_path, fine_tune=True)
     else:
-        model = VGGMangaModel(config=config)
+        model = VGGMangaModel(config=config, fine_tune=True)
 
     print('[INFO] 训练网络')
     trainer = VGGMangaTrainer(
