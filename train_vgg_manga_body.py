@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from data_loaders.vgg_manga_dl import VGGMangaDL
-from models.vgg_manga_simple_model import VGGMangaSimpleModel
+from models.vgg_manga_model import VGGMangaModel
 from trainers.vgg_manga_trainer import VGGMangaTrainer
 from utils.config_utils import process_config, get_train_args
 import numpy as np
@@ -10,7 +10,7 @@ import numpy as np
 
 def train_vgg_manga():
 
-    manga_dir = '/Users/patrick/Documents/datasets/manga109_frame_face'
+    manga_dir = 'manga109_frame_body'
     print('[INFO] 解析配置…')
     parser = None
     config = None
@@ -34,9 +34,9 @@ def train_vgg_manga():
 
     print('[INFO] 构造网络…')
     if model_path != 'None':
-        model = VGGMangaSimpleModel(config=config, model_path=model_path)
+        model = VGGMangaModel(config=config, model_path=model_path)
     else:
-        model = VGGMangaSimpleModel(config=config)
+        model = VGGMangaModel(config=config)
 
     print('[INFO] 训练网络')
     trainer = VGGMangaTrainer(
@@ -50,5 +50,5 @@ def train_vgg_manga():
 
 if __name__ == "__main__":
     import os
-    os.environ["CUDA_VISIBLE_DEVICES"] = "1,2,3"
+    os.environ["CUDA_VISIBLE_DEVICES"] = "0,1"
     train_vgg_manga()
