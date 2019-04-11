@@ -38,7 +38,7 @@ def apply_selective_search(manga109_path, target_path, threshold_pixels=2000, th
                     continue
                 # distorted rects
                 x, y, w, h = r['rect']
-                if w / h > threshold_ratio or h / w > threshold_ratio:
+                if w / (h + 0.001) > threshold_ratio or h / (w + 0.001) > threshold_ratio:
                     continue
                 candidates.add(r['rect'])
 

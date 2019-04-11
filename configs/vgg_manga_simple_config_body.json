@@ -1,8 +1,8 @@
 {
-  "exp_name": "vgg_manga",
-  "lr": 0.001,
+  "exp_name": "vgg_manga_simple_body_4_10",
+  "lr": 0.01,
   "decay": 0.0,
   "num_epochs": 50,
-  "batch_size": 128,
+  "batch_size": 32,
   "num_classes": 2
 }
