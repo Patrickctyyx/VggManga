@@ -9,6 +9,7 @@ from utils.config_utils import process_config, get_test_args
 
 
 def test_vgg_manga():
+    manga_dir = 'manga109_frame_body'
     print('[INFO] 解析配置…')
     parser = None
     config = None
@@ -29,7 +30,7 @@ def test_vgg_manga():
     np.random.seed(47)
 
     print('[INFO] 加载数据…')
-    dl = VGGMangaDL()
+    dl = VGGMangaDL(manga_dir=manga_dir)
     test_generator = dl.get_test_data()
 
     print('[INFO] 测试模型…')
