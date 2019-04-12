@@ -30,7 +30,7 @@ def test_vgg_manga():
     np.random.seed(47)
 
     print('[INFO] 加载数据…')
-    dl = VGGMangaDL(manga_dir=manga_dir)
+    dl = VGGMangaDL(config=config, manga_dir=manga_dir)
     test_generator = dl.get_test_data()
 
     print('[INFO] 测试模型…')
