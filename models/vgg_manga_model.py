@@ -36,7 +36,7 @@ class VGGMangaModel(ModelBase):
         else:
             model = tf.keras.applications.vgg16.VGG16(weights=None, classes=self.config.num_classes)
 
-        model.compile(optimizer='adam', loss='binary_crossentropy')
+        model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
 
         tf.keras.utils.plot_model(model, to_file=os.path.join(self.config.img_dir, 'vgg16.png'), show_shapes=True)
 

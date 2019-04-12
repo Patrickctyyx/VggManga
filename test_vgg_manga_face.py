@@ -1,6 +1,7 @@
 # !/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import os
 import numpy as np
 
 from data_loaders.vgg_manga_dl import VGGMangaDL
@@ -36,7 +37,8 @@ def test_vgg_manga():
     print('[INFO] 测试模型…')
     infer = VGGMangaInfer(model_path, config)
     result = infer.model.evaluate_generator(test_generator)
-    print('[INFO] loss: %.4f, accuracy: %.4f' % (result[0], result[1]))
+    print(result)
+    # print('[INFO] loss: %.4f, accuracy: %.4f' % (result[0], result[1]))
     print('[INFO] 测试完成…')
 
     # print('[INFO] 预测数据…')
