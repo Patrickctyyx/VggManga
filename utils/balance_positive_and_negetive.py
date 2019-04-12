@@ -35,8 +35,10 @@ def balance(manga_dir):
 
 
 if __name__ == '__main__':
-    manga_dir = '/Users/patrick/Documents/datasets/manga109_frame_body'
-    balance(manga_dir)
-    for subdir in ['train', 'test', 'validation']:
-        print(len(os.listdir(os.path.join(manga_dir, subdir, 'not'))))
-        print(len(os.listdir(os.path.join(manga_dir, subdir, 'have'))))
+    manga_base_dir = '/home/patrick/VggManga/manga109_frame_'
+    for dir_type in ['body', 'face']:
+        manga_dir = manga_base_dir + dir_type
+        balance(manga_dir)
+        for subdir in ['train', 'test', 'validation']:
+            print(len(os.listdir(os.path.join(manga_dir, subdir, 'not'))))
+            print(len(os.listdir(os.path.join(manga_dir, subdir, 'have'))))
