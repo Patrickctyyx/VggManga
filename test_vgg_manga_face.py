@@ -48,4 +48,5 @@ def test_vgg_manga():
 
 
 if __name__ == "__main__":
+    os.environ["CUDA_VISIBLE_DEVICES"] = "1,2"
     test_vgg_manga()
