@@ -1,7 +1,7 @@
 # !/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from data_loaders.vgg_manga_dl import VGGMangaDL
+from data_loaders.facenet_dl import FaceNetDL
 from models.vgg_manga_model import VGGMangaModel
 from trainers.vgg_manga_trainer import VGGMangaTrainer
 from utils.config_utils import process_config, get_train_args
@@ -10,7 +10,7 @@ import numpy as np
 
 def train_vgg_manga():
 
-    manga_dir = 'manga109_frame_face'
+    manga_dir = 'MangaFaceNetDataset/facenetdata'
     print('[INFO] 解析配置…')
     parser = None
     config = None
@@ -30,7 +30,7 @@ def train_vgg_manga():
     np.random.seed(47)
 
     print('[INFO] 加载数据…')
-    dl = VGGMangaDL(config=config, manga_dir=manga_dir)
+    dl = FaceNetDL(config=config, manga_dir=manga_dir)
 
     print('[INFO] 构造网络…')
     if model_path != 'None':
