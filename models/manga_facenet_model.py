@@ -17,7 +17,7 @@ class MangaFaceNetModel(ModelBase):
     def build_model(self):
 
         # conv layers
-        main_input = tf.keras.Input(shape=(40, 40), name='input')
+        main_input = tf.keras.Input(shape=(40, 40, 1), name='input')
         layer_1 = tf.keras.layers.Convolution2D(32, (3, 3), padding='same', activation='relu', name='conv1')(main_input)
         layer_1 = tf.keras.layers.MaxPooling2D((2, 2), strides=(2, 2), padding='same', name='pool1')(layer_1)
         layer_1 = tf.keras.layers.Dropout(0.25)(layer_1)

@@ -125,3 +125,4 @@ test_fine_tune.py
 notebooks/
 *.ipynb
 utils/mk_dirs.py
+test_net.py
