@@ -24,7 +24,7 @@ class FaceNetDL(DataLoaderBase):
             os.path.join(self.root_path, self.manga_dir, 'training'),
             target_size=(224, 224),
             batch_size=self.config.batch_size,
-            subset='train'
+            subset='training'
         )
         val_generator = train_datagen.flow_from_directory(
             os.path.join(self.root_path, self.manga_dir, 'training'),

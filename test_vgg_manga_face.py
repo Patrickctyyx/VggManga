@@ -37,6 +37,7 @@ def test_vgg_manga():
     print('[INFO] 测试模型…')
     infer = VGGMangaInfer(model_path, config)
     result = infer.model.evaluate_generator(test_generator)
+    print(infer.model.metrics_names)
     print(result)
     # print('[INFO] loss: %.4f, accuracy: %.4f' % (result[0], result[1]))
     print('[INFO] 测试完成…')
