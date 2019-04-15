@@ -22,6 +22,7 @@ def train_vgg_mnist():
 
     # model = MangaFaceNetModel(config=config, use_vgg=True)
     model = tf.keras.applications.vgg16.VGG16(weights=None, classes=10)
+    model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
     print('[INFO] 使用 VGG 作为骨架')
 
     print('[INFO] 训练网络')
@@ -32,5 +33,5 @@ def train_vgg_mnist():
 
 if __name__ == "__main__":
     import os
-    os.environ["CUDA_VISIBLE_DEVICES"] = "2"
+    os.environ["CUDA_VISIBLE_DEVICES"] = "3"
     train_vgg_mnist()
