@@ -51,5 +51,5 @@ def train_vgg_manga():
 
 if __name__ == "__main__":
     import os
-    os.environ["CUDA_VISIBLE_DEVICES"] = "0,1"
+    os.environ["CUDA_VISIBLE_DEVICES"] = "0"
     train_vgg_manga()
