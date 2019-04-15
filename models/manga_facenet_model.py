@@ -79,7 +79,54 @@ class MangaFaceNetModel(ModelBase):
         return main_input, layer_5
 
     def get_vgg_backbone(self):
-        base_model = tf.keras.applications.vgg16.VGG16(weights='imagenet',
-                                                       include_top=False,
-                                                       input_shape=(224, 224, 3))
-        return base_model.input, base_model.output
+        main_input = tf.keras.Input(shape=(224, 224, 3), name='input')
+
+        conv1_1 = tf.keras.layers.Conv2D(64, (3, 3), strides=(1, 1), padding='same',
+                                         activation='relu',
+                                         name='conv1_1')(main_input)
+        conv1_2 = tf.keras.layers.Conv2D(64, (3, 3), strides=(1, 1), padding='same',
+                                         activation='relu',
+                                         name='conv1_2')(conv1_1)
+        pool1 = tf.keras.layers.MaxPooling2D((2, 2), strides=(2, 2), name='pool1')(conv1_2)
+
+        conv2_1 = tf.keras.layers.Conv2D(128, (3, 3), strides=(1, 1), padding='same',
+                                         activation='relu',
+                                         name='conv2_1')(pool1)
+        conv2_2 = tf.keras.layers.Conv2D(128, (3, 3), strides=(1, 1), padding='same',
+                                         activation='relu',
+                                         name='conv2_2')(conv2_1)
+        pool2 = tf.keras.layers.MaxPooling2D((2, 2), strides=(2, 2), name='pool2')(conv2_2)
+
+        conv3_1 = tf.keras.layers.Conv2D(256, (3, 3), strides=(1, 1), padding='same',
+                                         activation='relu',
+                                         name='conv3_1')(pool2)
+        conv3_2 = tf.keras.layers.Conv2D(256, (3, 3), strides=(1, 1), padding='same',
+                                         activation='relu',
+                                         name='conv3_2')(conv3_1)
+        conv3_3 = tf.keras.layers.Conv2D(256, (3, 3), strides=(1, 1), padding='same',
+                                         activation='relu',
+                                         name='conv3_3')(conv3_2)
+        pool3 = tf.keras.layers.MaxPooling2D((2, 2), strides=(2, 2), name='pool3')(conv3_3)
+
+        conv4_1 = tf.keras.layers.Conv2D(512, (3, 3), strides=(1, 1), padding='same',
+                                         activation='relu',
+                                         name='conv4_1')(pool3)
+        conv4_2 = tf.keras.layers.Conv2D(512, (3, 3), strides=(1, 1), padding='same',
+                                         activation='relu',
+                                         name='conv4_2')(conv4_1)
+        conv4_3 = tf.keras.layers.Conv2D(512, (3, 3), strides=(1, 1), padding='same',
+                                         activation='relu',
+                                         name='conv4_3')(conv4_2)
+        pool4 = tf.keras.layers.MaxPooling2D((2, 2), strides=(2, 2), name='pool4')(conv4_3)
+
+        conv5_1 = tf.keras.layers.Conv2D(512, (3, 3), strides=(1, 1), padding='same',
+                                         activation='relu',
+                                         name='conv5_1')(pool4)
+        conv5_2 = tf.keras.layers.Conv2D(512, (3, 3), strides=(1, 1), padding='same',
+                                         activation='relu',
+                                         name='conv5_2')(conv5_1)
+        conv5_3 = tf.keras.layers.Conv2D(512, (3, 3), strides=(1, 1), padding='same',
+                                         activation='relu',
+                                         name='conv5_3')(conv5_2)
+        pool5 = tf.keras.layers.MaxPooling2D((2, 2), strides=(2, 2), name='pool5')(conv5_3)
+        return main_input, pool5
