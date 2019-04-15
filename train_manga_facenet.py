@@ -34,10 +34,10 @@ def train_vgg_manga():
 
     print('[INFO] 构造网络…')
     if model_path != 'None':
-        model = MangaFaceNetModel(config=config, model_path=model_path, use_vgg=True)
-        print('[INFO] 使用 VGG 作为骨架')
+        model = MangaFaceNetModel(config=config, model_path=model_path)
     else:
-        model = MangaFaceNetModel(config=config)
+        model = MangaFaceNetModel(config=config, use_vgg=True)
+        print('[INFO] 使用 VGG 作为骨架')
 
     print('[INFO] 训练网络')
     trainer = VGGMangaTrainer(
