@@ -20,7 +20,8 @@ def train_vgg_mnist():
     x_train.resize((x_train.shape[0], 224, 224, 3))
     x_test.resize((x_test.shape[0], 224, 224, 3))
 
-    model = MangaFaceNetModel(config=config, use_vgg=True)
+    # model = MangaFaceNetModel(config=config, use_vgg=True)
+    model = tf.keras.applications.vgg16.VGG16(weights=None, classes=10)
     print('[INFO] 使用 VGG 作为骨架')
 
     print('[INFO] 训练网络')
