@@ -116,7 +116,7 @@ manga109_frame_body/
 manga109_frame_face/
 selective_search_imgs/
 MangaFaceNetDataset/ground truth
-MangaFaceNetDataset/facenetdataset
+MangaFaceNetDataset/facenetdata
 
 # logs
 logs/
