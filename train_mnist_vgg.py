@@ -15,12 +15,16 @@ def train_vgg_mnist():
 
     print('[INFO] 加载数据…')
     (x_train, y_train), (x_test, y_test) = tf.keras.datasets.mnist.load_data()
+    y_train = tf.keras.utils.to_categorical(y_train)
+    y_test = tf.keras.utils.to_categorical(y_test)
+    x_train.resize((x_train.shape[0], 224, 224, 3))
+    x_test.resize((x_test.shape[0], 224, 224, 3))
 
     model = MangaFaceNetModel(config=config, use_vgg=True)
     print('[INFO] 使用 VGG 作为骨架')
 
     print('[INFO] 训练网络')
-    model.model.fit(x_train, y_train, epoch=5)
+    model.model.fit(x_train, y_train, epochs=5)
     print('[INFO] 训练完成…')
     model.model.evaluate(x_test, y_test)
 
