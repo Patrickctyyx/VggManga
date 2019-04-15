@@ -87,7 +87,8 @@ class MangaFaceNetModel(ModelBase):
         conv1_2 = tf.keras.layers.Conv2D(64, (3, 3), strides=(1, 1), padding='same',
                                          activation='relu',
                                          name='conv1_2')(conv1_1)
-        pool1 = tf.keras.layers.MaxPooling2D((2, 2), strides=(2, 2), name='pool1')(conv1_2)
+        bn1 = tf.keras.layers.BatchNormalization()(conv1_2)
+        pool1 = tf.keras.layers.MaxPooling2D((2, 2), strides=(2, 2), name='pool1')(bn1)
 
         conv2_1 = tf.keras.layers.Conv2D(128, (3, 3), strides=(1, 1), padding='same',
                                          activation='relu',
@@ -95,7 +96,8 @@ class MangaFaceNetModel(ModelBase):
         conv2_2 = tf.keras.layers.Conv2D(128, (3, 3), strides=(1, 1), padding='same',
                                          activation='relu',
                                          name='conv2_2')(conv2_1)
-        pool2 = tf.keras.layers.MaxPooling2D((2, 2), strides=(2, 2), name='pool2')(conv2_2)
+        bn2 = tf.keras.layers.BatchNormalization()(conv2_2)
+        pool2 = tf.keras.layers.MaxPooling2D((2, 2), strides=(2, 2), name='pool2')(bn2)
 
         conv3_1 = tf.keras.layers.Conv2D(256, (3, 3), strides=(1, 1), padding='same',
                                          activation='relu',
@@ -106,7 +108,8 @@ class MangaFaceNetModel(ModelBase):
         conv3_3 = tf.keras.layers.Conv2D(256, (3, 3), strides=(1, 1), padding='same',
                                          activation='relu',
                                          name='conv3_3')(conv3_2)
-        pool3 = tf.keras.layers.MaxPooling2D((2, 2), strides=(2, 2), name='pool3')(conv3_3)
+        bn3 = tf.keras.layers.BatchNormalization()(conv3_3)
+        pool3 = tf.keras.layers.MaxPooling2D((2, 2), strides=(2, 2), name='pool3')(bn3)
 
         conv4_1 = tf.keras.layers.Conv2D(512, (3, 3), strides=(1, 1), padding='same',
                                          activation='relu',
@@ -117,7 +120,8 @@ class MangaFaceNetModel(ModelBase):
         conv4_3 = tf.keras.layers.Conv2D(512, (3, 3), strides=(1, 1), padding='same',
                                          activation='relu',
                                          name='conv4_3')(conv4_2)
-        pool4 = tf.keras.layers.MaxPooling2D((2, 2), strides=(2, 2), name='pool4')(conv4_3)
+        bn4 = tf.keras.layers.BatchNormalization()(conv4_3)
+        pool4 = tf.keras.layers.MaxPooling2D((2, 2), strides=(2, 2), name='pool4')(bn4)
 
         conv5_1 = tf.keras.layers.Conv2D(512, (3, 3), strides=(1, 1), padding='same',
                                          activation='relu',
@@ -128,5 +132,6 @@ class MangaFaceNetModel(ModelBase):
         conv5_3 = tf.keras.layers.Conv2D(512, (3, 3), strides=(1, 1), padding='same',
                                          activation='relu',
                                          name='conv5_3')(conv5_2)
-        pool5 = tf.keras.layers.MaxPooling2D((2, 2), strides=(2, 2), name='pool5')(conv5_3)
+        bn5 = tf.keras.layers.BatchNormalization()(conv5_3)
+        pool5 = tf.keras.layers.MaxPooling2D((2, 2), strides=(2, 2), name='pool5')(bn5)
         return main_input, pool5
