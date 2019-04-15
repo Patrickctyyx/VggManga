@@ -1,8 +1,8 @@
 {
-  "exp_name": "manga_facenet_4_15_2",
+  "exp_name": "manga_facenet_4_15_3",
   "lr": 0.01,
   "decay": 0.0,
   "num_epochs": 50,
-  "batch_size": 64,
+  "batch_size": 32,
   "num_classes": 2
 }
