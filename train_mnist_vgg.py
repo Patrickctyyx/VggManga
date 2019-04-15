@@ -15,22 +15,21 @@ def train_vgg_mnist():
     config = process_config(config_str)
 
     print('[INFO] 加载数据…')
-    (x_train, y_train), (x_test, y_test) = tf.keras.datasets.mnist.load_data()
+    (x_train, y_train), (x_test, y_test) = tf.keras.datasets.cifar10.load_data()
     y_train = tf.keras.utils.to_categorical(y_train)
     y_test = tf.keras.utils.to_categorical(y_test)
-    # x_train.resize((x_train.shape[0], 224, 224, 3))
-    # x_test.resize((x_test.shape[0], 224, 224, 3))
-    x_train = [cv2.cvtColor(cv2.resize(i, (224, 224)), cv2.COLOR_GRAY2RGB)
-               for i in x_train]  # 变成彩色的
-    # np.concatenate拼接到一起把
-    x_train = np.concatenate([arr[np.newaxis] for arr in x_train]).astype('float32')
 
-    x_test = [cv2.cvtColor(cv2.resize(i, (224, 224)), cv2.COLOR_GRAY2RGB)
-              for i in x_test]
-    x_test = np.concatenate([arr[np.newaxis] for arr in x_test]).astype('float32')
+    x_train = np.resize(x_train, (x_train.shape[0], 48, 48, 3))
+    x_test = np.resize(x_test, (x_test.shape[0], 48, 48, 3))
+
+    x_train = x_train[: 10]
+    x_test = x_test[: 10]
+    y_train = y_train[: 10]
+    y_test = y_test[: 10]
 
     # model = MangaFaceNetModel(config=config, use_vgg=True)
-    model = tf.keras.applications.vgg16.VGG16(weights=None, classes=10)
+    model = tf.keras.applications.vgg16.VGG16(weights=None, classes=10, input_shape=(48, 48, 3))
+    model.summary()
     model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
     print('[INFO] 使用 VGG 作为骨架')
 

@@ -30,7 +30,7 @@ def train_vgg_manga():
     np.random.seed(47)
 
     print('[INFO] 加载数据…')
-    dl = FaceNetDL(config=config, manga_dir=manga_dir, vgg_format=True)
+    dl = FaceNetDL(config=config, manga_dir=manga_dir, vgg_format=False)
 
     print('[INFO] 构造网络…')
     if model_path != 'None':
@@ -51,5 +51,5 @@ def train_vgg_manga():
 
 if __name__ == "__main__":
     import os
-    os.environ["CUDA_VISIBLE_DEVICES"] = "2"
+    os.environ["CUDA_VISIBLE_DEVICES"] = "2,3"
     train_vgg_manga()

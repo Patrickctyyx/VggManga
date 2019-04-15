@@ -30,7 +30,7 @@ def train_vgg_manga():
     np.random.seed(47)
 
     print('[INFO] 加载数据…')
-    dl = FaceNetDL(config=config, manga_dir=manga_dir)
+    dl = FaceNetDL(config=config, manga_dir=manga_dir, vgg_format=True)
 
     print('[INFO] 构造网络…')
     if model_path != 'None':

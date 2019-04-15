@@ -1,5 +1,5 @@
 {
-  "exp_name": "vgg_manga_face_4_14",
+  "exp_name": "vgg_manga_face_4_15",
   "lr": 0.01,
   "decay": 0.0,
   "num_epochs": 50,
