@@ -82,56 +82,64 @@ class MangaFaceNetModel(ModelBase):
         main_input = tf.keras.Input(shape=(224, 224, 3), name='input')
 
         conv1_1 = tf.keras.layers.Conv2D(64, (3, 3), strides=(1, 1), padding='same',
-                                         activation='relu',
                                          name='conv1_1')(main_input)
+        bn1_1 = tf.keras.layers.BatchNormalization()(conv1_1)
+        relu1_1 = tf.keras.layers.ReLU()(bn1_1)
         conv1_2 = tf.keras.layers.Conv2D(64, (3, 3), strides=(1, 1), padding='same',
-                                         activation='relu',
-                                         name='conv1_2')(conv1_1)
-        bn1 = tf.keras.layers.BatchNormalization()(conv1_2)
-        pool1 = tf.keras.layers.MaxPooling2D((2, 2), strides=(2, 2), name='pool1')(bn1)
+                                         name='conv1_2')(relu1_1)
+        bn1_2 = tf.keras.layers.BatchNormalization()(conv1_2)
+        relu1_2 = tf.keras.layers.ReLU()(bn1_2)
+        pool1 = tf.keras.layers.MaxPooling2D((2, 2), strides=(2, 2), name='pool1')(relu1_2)
 
         conv2_1 = tf.keras.layers.Conv2D(128, (3, 3), strides=(1, 1), padding='same',
-                                         activation='relu',
                                          name='conv2_1')(pool1)
+        bn2_1 = tf.keras.layers.BatchNormalization()(conv2_1)
+        relu2_1 = tf.keras.layers.ReLU()(bn2_1)
         conv2_2 = tf.keras.layers.Conv2D(128, (3, 3), strides=(1, 1), padding='same',
-                                         activation='relu',
-                                         name='conv2_2')(conv2_1)
-        bn2 = tf.keras.layers.BatchNormalization()(conv2_2)
-        pool2 = tf.keras.layers.MaxPooling2D((2, 2), strides=(2, 2), name='pool2')(bn2)
+                                         name='conv2_2')(relu2_1)
+        bn2_2 = tf.keras.layers.BatchNormalization()(conv2_2)
+        relu2_2 = tf.keras.layers.ReLU()(bn2_2)
+        pool2 = tf.keras.layers.MaxPooling2D((2, 2), strides=(2, 2), name='pool2')(relu2_2)
 
         conv3_1 = tf.keras.layers.Conv2D(256, (3, 3), strides=(1, 1), padding='same',
-                                         activation='relu',
                                          name='conv3_1')(pool2)
+        bn3_1 = tf.keras.layers.BatchNormalization()(conv3_1)
+        relu3_1 = tf.keras.layers.ReLU()(bn3_1)
         conv3_2 = tf.keras.layers.Conv2D(256, (3, 3), strides=(1, 1), padding='same',
-                                         activation='relu',
-                                         name='conv3_2')(conv3_1)
+                                         name='conv3_2')(relu3_1)
+        bn3_2 = tf.keras.layers.BatchNormalization()(conv3_2)
+        relu3_2 = tf.keras.layers.ReLU()(bn3_2)
         conv3_3 = tf.keras.layers.Conv2D(256, (3, 3), strides=(1, 1), padding='same',
-                                         activation='relu',
-                                         name='conv3_3')(conv3_2)
-        bn3 = tf.keras.layers.BatchNormalization()(conv3_3)
-        pool3 = tf.keras.layers.MaxPooling2D((2, 2), strides=(2, 2), name='pool3')(bn3)
+                                         name='conv3_3')(relu3_2)
+        bn3_3 = tf.keras.layers.BatchNormalization()(conv3_3)
+        relu3_3 = tf.keras.layers.ReLU()(bn3_3)
+        pool3 = tf.keras.layers.MaxPooling2D((2, 2), strides=(2, 2), name='pool3')(relu3_3)
 
         conv4_1 = tf.keras.layers.Conv2D(512, (3, 3), strides=(1, 1), padding='same',
-                                         activation='relu',
                                          name='conv4_1')(pool3)
+        bn4_1 = tf.keras.layers.BatchNormalization()(conv4_1)
+        relu4_1 = tf.keras.layers.ReLU()(bn4_1)
         conv4_2 = tf.keras.layers.Conv2D(512, (3, 3), strides=(1, 1), padding='same',
-                                         activation='relu',
-                                         name='conv4_2')(conv4_1)
+                                         name='conv4_2')(relu4_1)
+        bn4_2 = tf.keras.layers.BatchNormalization()(conv4_2)
+        relu4_2 = tf.keras.layers.ReLU()(bn4_2)
         conv4_3 = tf.keras.layers.Conv2D(512, (3, 3), strides=(1, 1), padding='same',
-                                         activation='relu',
-                                         name='conv4_3')(conv4_2)
-        bn4 = tf.keras.layers.BatchNormalization()(conv4_3)
-        pool4 = tf.keras.layers.MaxPooling2D((2, 2), strides=(2, 2), name='pool4')(bn4)
+                                         name='conv4_3')(relu4_2)
+        bn4_3 = tf.keras.layers.BatchNormalization()(conv4_3)
+        relu4_3 = tf.keras.layers.ReLU()(bn4_3)
+        pool4 = tf.keras.layers.MaxPooling2D((2, 2), strides=(2, 2), name='pool4')(relu4_3)
 
         conv5_1 = tf.keras.layers.Conv2D(512, (3, 3), strides=(1, 1), padding='same',
-                                         activation='relu',
                                          name='conv5_1')(pool4)
+        bn5_1 = tf.keras.layers.BatchNormalization()(conv5_1)
+        relu5_1 = tf.keras.layers.ReLU()(bn5_1)
         conv5_2 = tf.keras.layers.Conv2D(512, (3, 3), strides=(1, 1), padding='same',
-                                         activation='relu',
-                                         name='conv5_2')(conv5_1)
+                                         name='conv5_2')(relu5_1)
+        bn5_2 = tf.keras.layers.BatchNormalization()(conv5_2)
+        relu5_2 = tf.keras.layers.ReLU()(bn5_2)
         conv5_3 = tf.keras.layers.Conv2D(512, (3, 3), strides=(1, 1), padding='same',
-                                         activation='relu',
-                                         name='conv5_3')(conv5_2)
-        bn5 = tf.keras.layers.BatchNormalization()(conv5_3)
-        pool5 = tf.keras.layers.MaxPooling2D((2, 2), strides=(2, 2), name='pool5')(bn5)
+                                         name='conv5_3')(relu5_2)
+        bn5_3 = tf.keras.layers.BatchNormalization()(conv5_3)
+        relu5_3 = tf.keras.layers.ReLU()(bn5_3)
+        pool5 = tf.keras.layers.MaxPooling2D((2, 2), strides=(2, 2), name='pool5')(relu5_3)
         return main_input, pool5
