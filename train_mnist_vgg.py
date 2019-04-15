@@ -25,9 +25,9 @@ def train_vgg_mnist():
     print('[INFO] 使用 VGG 作为骨架')
 
     print('[INFO] 训练网络')
-    model.model.fit(x_train, y_train, epochs=5)
+    model.fit(x_train, y_train, epochs=5)
     print('[INFO] 训练完成…')
-    model.model.evaluate(x_test, y_test)
+    model.evaluate(x_test, y_test)
 
 
 if __name__ == "__main__":
