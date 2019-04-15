@@ -7,6 +7,7 @@ from trainers.vgg_manga_trainer import VGGMangaTrainer
 from utils.config_utils import process_config, get_train_args
 import numpy as np
 import tensorflow as tf
+import cv2
 
 
 def train_vgg_mnist():
@@ -17,8 +18,16 @@ def train_vgg_mnist():
     (x_train, y_train), (x_test, y_test) = tf.keras.datasets.mnist.load_data()
     y_train = tf.keras.utils.to_categorical(y_train)
     y_test = tf.keras.utils.to_categorical(y_test)
-    x_train.resize((x_train.shape[0], 224, 224, 3))
-    x_test.resize((x_test.shape[0], 224, 224, 3))
+    # x_train.resize((x_train.shape[0], 224, 224, 3))
+    # x_test.resize((x_test.shape[0], 224, 224, 3))
+    x_train = [cv2.cvtColor(cv2.resize(i, (224, 224)), cv2.COLOR_GRAY2RGB)
+               for i in x_train]  # 变成彩色的
+    # np.concatenate拼接到一起把
+    x_train = np.concatenate([arr[np.newaxis] for arr in x_train]).astype('float32')
+
+    x_test = [cv2.cvtColor(cv2.resize(i, (224, 224)), cv2.COLOR_GRAY2RGB)
+              for i in x_test]
+    x_test = np.concatenate([arr[np.newaxis] for arr in x_test]).astype('float32')
 
     # model = MangaFaceNetModel(config=config, use_vgg=True)
     model = tf.keras.applications.vgg16.VGG16(weights=None, classes=10)
