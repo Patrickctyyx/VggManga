@@ -1,0 +1,8 @@
+{
+  "exp_name": "vgg_mnist",
+  "lr": 0.01,
+  "decay": 0.0,
+  "num_epochs": 5,
+  "batch_size": 32,
+  "num_classes": 10
+}

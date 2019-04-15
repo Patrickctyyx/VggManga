@@ -27,7 +27,7 @@ class MangaFaceNetModel(ModelBase):
         # top branch
         x = tf.keras.layers.Dense(256, activation='relu', name='fc1')(fl)
         x = tf.keras.layers.Dropout(0.5)(x)
-        predictions_top = tf.keras.layers.Dense(2, activation='softmax', name='fc2')(x)
+        predictions_top = tf.keras.layers.Dense(self.config.num_classes, activation='softmax', name='fc2')(x)
 
         if self.with_bottom:
             # bottom branch
@@ -47,7 +47,7 @@ class MangaFaceNetModel(ModelBase):
             model.compile(optimizer='adam', loss=losses, loss_weights=loss_weights, metrics=['accuracy'])
         else:
             model = tf.keras.models.Model(inputs=main_input, outputs=predictions_top)
-            model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+            model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
         tf.keras.utils.plot_model(model, to_file=os.path.join(self.config.img_dir, 'manga_facenet.png'),
                                   show_shapes=True)
