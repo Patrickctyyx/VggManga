@@ -1,25 +1,23 @@
 # !/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+from data_loaders.facenet_dl import FaceNetDL
+from models.manga_facenet_model import MangaFaceNetModel
+from trainers.vgg_manga_trainer import VGGMangaTrainer
+from utils.config_utils import process_config, get_train_args
 from utils.utils import mkdir_if_not_exist
 import numpy as np
 import tensorflow as tf
+import cv2
 
 
 def train_vgg_mnist():
 
     print('[INFO] 加载数据…')
-    (x_train, y_train), (x_test, y_test) = tf.keras.datasets.mnist.load_data()
-    y_train = tf.keras.utils.to_categorical(y_train)
-    y_test = tf.keras.utils.to_categorical(y_test)
+    config = process_config('configs/vgg_mnist_config.json')
+    dl = FaceNetDL(config=config)
 
-    x_train = np.expand_dims(x_train, axis=-1)
-    x_test = np.expand_dims(x_test, axis=-1)
-
-    # x_train = np.resize(x_train, (x_train.shape[0], 48, 48, 3))
-    # x_test = np.resize(x_test, (x_test.shape[0], 48, 48, 3))
-
-    main_input = tf.keras.Input(shape=(28, 28, 1))
+    main_input = tf.keras.Input(shape=(config.input_shape, config.input_shape, 1))
 
     x = tf.keras.layers.Convolution2D(32, (3, 3), padding='same', name='conv1')(main_input)
     x = tf.keras.layers.BatchNormalization(name='bn1')(x)
@@ -39,7 +37,7 @@ def train_vgg_mnist():
     x = tf.keras.layers.Flatten(name='fl')(x)
 
     x = tf.keras.layers.Dense(3168, activation='relu', name='fc1')(x)
-    x = tf.keras.layers.Dense(10, activation='softmax')(x)
+    x = tf.keras.layers.Dense(2, activation='softmax')(x)
 
     model = tf.keras.Model(inputs=main_input, outputs=x)
 
@@ -47,7 +45,7 @@ def train_vgg_mnist():
     model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
     print('[INFO] 训练网络')
-    model_save_path = 'experiments/mnist_model/checkpoints'
+    model_save_path = 'experiments/mnist_facenet/checkpoints'
     mkdir_if_not_exist(model_save_path)
     cp_callback = tf.keras.callbacks.ModelCheckpoint(
         model_save_path,
@@ -55,13 +53,19 @@ def train_vgg_mnist():
         monitor='val_loss',
         mode='min',
         save_best_only=True)
-    model.fit(x_train, y_train, epochs=10, callbacks=[cp_callback])
-
+    model.fit_generate(
+        dl.get_train_data(),
+        epochs=config.num_epochs,
+        validation_data=dl.get_validation_data(),
+        callbacks=[cp_callback])
     print('[INFO] 训练完成…')
-    model.evaluate(x_test, y_test)
+
+    print('[INFO] 测试模型…')
+    model.evaluate_generator(dl.get_test_data())
+    print('[INFO] 测试完成…')
 
 
 if __name__ == "__main__":
     import os
-    os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+    os.environ["CUDA_VISIBLE_DEVICES"] = "3"
     train_vgg_mnist()
