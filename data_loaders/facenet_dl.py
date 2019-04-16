@@ -12,9 +12,9 @@ class FaceNetDL(DataLoaderBase):
         self.manga_dir = self.config.manga_dir
         self.input_shape = self.config.input_shape
         if self.config.input_channel == 1:
-            self.color_mode = 'rgb'
-        else:
             self.color_mode = 'grayscale'
+        else:
+            self.color_mode = 'rgb'
         self.train_generator, self.validation_generator = self.generate_train_val()
 
     def generate_train_val(self):
