@@ -10,7 +10,6 @@ import numpy as np
 
 def train_vgg_manga():
 
-    manga_dir = 'MangaFaceNetDataset/facenetdata'
     print('[INFO] 解析配置…')
     parser = None
     config = None
@@ -30,14 +29,20 @@ def train_vgg_manga():
     np.random.seed(47)
 
     print('[INFO] 加载数据…')
-    dl = FaceNetDL(config=config, manga_dir=manga_dir, vgg_format=False)
+    dl = FaceNetDL(config=config)
 
     print('[INFO] 构造网络…')
+    if config.backbone is 'vgg':
+        print('[INFO] 使用 VGG 作为骨架')
+    elif config.backbone is 'alexnet':
+        print('[INFO] 使用 AlexNet 作为骨架')
+    else:
+        print('[INFO] 使用多层 CNN 作为骨架')
+
     if model_path != 'None':
         model = MangaFaceNetModel(config=config, model_path=model_path)
     else:
-        model = MangaFaceNetModel(config=config, use_vgg=True)
-        print('[INFO] 使用 VGG 作为骨架')
+        model = MangaFaceNetModel(config=config)
 
     print('[INFO] 训练网络')
     trainer = VGGMangaTrainer(

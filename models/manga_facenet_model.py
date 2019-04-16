@@ -6,10 +6,8 @@ from bases.model_base import ModelBase
 
 class MangaFaceNetModel(ModelBase):
 
-    def __init__(self, config, model_path=None, with_bottom=False, use_vgg=False):
+    def __init__(self, config, model_path=None):
         super(MangaFaceNetModel, self).__init__(config)
-        self.with_bottom = with_bottom
-        self.use_vgg = use_vgg
         if model_path:
             self.model = self.load_model(model_path)
         else:
@@ -18,10 +16,15 @@ class MangaFaceNetModel(ModelBase):
     def build_model(self):
 
         # conv layers
-        if self.use_vgg:
-            main_input, backbone = self.get_vgg_backbone()
+        main_input = tf.keras.Input(
+            shape=(self.config.input_shape, self.config.input_shape, self.config.input_channel),
+            name='input')
+        if self.config.backbone is 'alexnet':
+            backbone = self.get_alexnet_backbone(main_input)
+        elif self.config.backbone is 'vgg':
+            backbone = self.get_vgg_backbone(main_input)
         else:
-            main_input, backbone = self.get_simple_backbone()
+            backbone = self.get_simple_backbone(main_input)
 
         fl = tf.keras.layers.Flatten(name='flatten')(backbone)
         # top branch
@@ -29,7 +32,7 @@ class MangaFaceNetModel(ModelBase):
         x = tf.keras.layers.Dropout(0.5)(x)
         predictions_top = tf.keras.layers.Dense(self.config.num_classes, activation='softmax', name='fc2')(x)
 
-        if self.with_bottom:
+        if self.config.with_bottom:
             # bottom branch
             bottom = tf.keras.layers.Dense(256, activation='relu', name='fc1_bottom')(fl)
             bottom = tf.keras.layers.Dropout(0.5)(bottom)
@@ -49,7 +52,7 @@ class MangaFaceNetModel(ModelBase):
             model = tf.keras.models.Model(inputs=main_input, outputs=predictions_top)
             model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
-        tf.keras.utils.plot_model(model, to_file=os.path.join(self.config.img_dir, 'manga_facenet.png'),
+        tf.keras.utils.plot_model(model, to_file=os.path.join(self.config.img_dir, self.config.exp_name + '.png'),
                                   show_shapes=True)
 
         self.model = model
@@ -58,8 +61,8 @@ class MangaFaceNetModel(ModelBase):
         model = os.path.join(self.config.cp_dir, model_path)
         return tf.keras.models.load_model(model)
 
-    def get_simple_backbone(self):
-        main_input = tf.keras.Input(shape=(40, 40, 1), name='input')
+    def get_simple_backbone(self, main_input):
+
         layer_1 = tf.keras.layers.Convolution2D(32, (3, 3), padding='same', activation='relu', name='conv1')(main_input)
         layer_1 = tf.keras.layers.MaxPooling2D((2, 2), strides=(2, 2), padding='same', name='pool1')(layer_1)
         layer_1 = tf.keras.layers.Dropout(0.25)(layer_1)
@@ -76,10 +79,9 @@ class MangaFaceNetModel(ModelBase):
         layer_5 = tf.keras.layers.MaxPooling2D((2, 2), strides=(2, 2), padding='same', name='pool3')(layer_5)
         layer_5 = tf.keras.layers.Dropout(0.25)(layer_5)
 
-        return main_input, layer_5
+        return layer_5
 
-    def get_vgg_backbone(self):
-        main_input = tf.keras.Input(shape=(224, 224, 3), name='input')
+    def get_vgg_backbone(self, main_input):
 
         conv1_1 = tf.keras.layers.Conv2D(64, (3, 3), strides=(1, 1), padding='same',
                                          name='conv1_1')(main_input)
@@ -142,4 +144,36 @@ class MangaFaceNetModel(ModelBase):
         bn5_3 = tf.keras.layers.BatchNormalization()(conv5_3)
         relu5_3 = tf.keras.layers.ReLU()(bn5_3)
         pool5 = tf.keras.layers.MaxPooling2D((2, 2), strides=(2, 2), name='pool5')(relu5_3)
-        return main_input, pool5
+        return pool5
+
+    def get_alexnet_backbone(self, main_input):
+
+        conv_1 = tf.keras.layers.Conv2D(96, (11, 11), strides=(4, 4), padding='same',
+                                        name='conv1')(main_input)
+        bn_1 = tf.keras.layers.BatchNormalization()(conv_1)
+        relu_1 = tf.keras.layers.ReLU()(bn_1)
+        pool_1 = tf.keras.layers.MaxPooling2D((3, 3), strides=(2, 2), name='pool1')(relu_1)
+
+        conv_2 = tf.keras.layers.Conv2D(256, (5, 5), strides=(1, 1), padding='same',
+                                        name='conv2')(pool_1)
+        bn_2 = tf.keras.layers.BatchNormalization()(conv_2)
+        relu_2 = tf.keras.layers.ReLU()(bn_2)
+        pool_2 = tf.keras.layers.MaxPooling2D((3, 3), strides=(2, 2), name='pool2')(relu_2)
+
+        conv_3 = tf.keras.layers.Conv2D(384, (3, 3), strides=(1, 1), padding='same',
+                                        name='conv3')(pool_2)
+        bn_3 = tf.keras.layers.BatchNormalization()(conv_3)
+        relu_3 = tf.keras.layers.ReLU()(bn_3)
+
+        conv_4 = tf.keras.layers.Conv2D(384, (3, 3), strides=(1, 1), padding='same',
+                                        name='conv4')(relu_3)
+        bn_4 = tf.keras.layers.BatchNormalization()(conv_4)
+        relu_4 = tf.keras.layers.ReLU()(bn_4)
+
+        conv_5 = tf.keras.layers.Conv2D(256, (3, 3), strides=(1, 1), padding='same',
+                                        name='conv5')(relu_4)
+        bn_5 = tf.keras.layers.BatchNormalization()(conv_5)
+        relu_5 = tf.keras.layers.ReLU()(bn_5)
+        pool_5 = tf.keras.layers.MaxPooling2D((3, 3), strides=(2, 2), name='pool5')(relu_5)
+
+        return pool_5
