@@ -1,5 +1,5 @@
 {
-  "exp_name": "manga_facenet_simple",
+  "exp_name": "manga_facenet_alexnet",
   "lr": 0.01,
   "decay": 0.0,
   "num_epochs": 50,

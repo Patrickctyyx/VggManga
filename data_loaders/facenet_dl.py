@@ -11,6 +11,10 @@ class FaceNetDL(DataLoaderBase):
         self.root_path = ROOT_DIR
         self.manga_dir = self.config.manga_dir
         self.input_shape = self.config.input_shape
+        if self.config.input_channel == 1:
+            self.color_mode = 'rgb'
+        else:
+            self.color_mode = 'grayscale'
         self.train_generator, self.validation_generator = self.generate_train_val()
 
     def generate_train_val(self):
@@ -26,14 +30,14 @@ class FaceNetDL(DataLoaderBase):
             target_size=(self.input_shape, self.input_shape),
             batch_size=self.config.batch_size,
             subset='training',
-            color_mode='grayscale'
+            color_mode=self.color_mode
         )
         val_generator = train_datagen.flow_from_directory(
             os.path.join(self.root_path, self.manga_dir, 'training'),
             target_size=(self.input_shape, self.input_shape),
             batch_size=self.config.batch_size,
             subset='validation',
-            color_mode='grayscale'
+            color_mode=self.color_mode
         )
         return train_generator, val_generator
 
@@ -48,7 +52,7 @@ class FaceNetDL(DataLoaderBase):
             os.path.join(self.root_path, self.manga_dir, 'testing'),
             target_size=(self.input_shape, self.input_shape),
             batch_size=self.config.batch_size,
-            color_mode='grayscale'
+            color_mode=self.color_mode
         )
         return test_generator
 
