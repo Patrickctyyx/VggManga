@@ -47,7 +47,8 @@ class FaceNetDL(DataLoaderBase):
         test_generator = test_datagen.flow_from_directory(
             os.path.join(self.root_path, self.manga_dir, 'testing'),
             target_size=(self.input_shape, self.input_shape),
-            batch_size=self.config.batch_size
+            batch_size=self.config.batch_size,
+            color_mode='grayscale'
         )
         return test_generator
 
