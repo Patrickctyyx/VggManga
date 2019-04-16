@@ -28,9 +28,15 @@ class MangaFaceNetModel(ModelBase):
 
         fl = tf.keras.layers.Flatten(name='flatten')(backbone)
         # top branch
-        x = tf.keras.layers.Dense(256, activation='relu', name='fc1')(fl)
-        x = tf.keras.layers.Dropout(0.5)(x)
-        predictions_top = tf.keras.layers.Dense(self.config.num_classes, activation='softmax', name='fc2')(x)
+        if self.config.complex_top:
+            x = tf.keras.layers.Dense(4096, activation='relu', name='fc1')(fl)
+            x = tf.keras.layers.Dropout(0.5)(x)
+            x = tf.keras.layers.Dense(4096, activation='relu', name='fc2')(x)
+            x = tf.keras.layers.Dropout(0.5)(x)
+        else:
+            x = tf.keras.layers.Dense(256, activation='relu', name='fc1')(fl)
+            x = tf.keras.layers.Dropout(0.5)(x)
+        predictions_top = tf.keras.layers.Dense(self.config.num_classes, activation='softmax', name='output')(x)
 
         if self.config.with_bottom:
             # bottom branch
@@ -64,27 +70,27 @@ class MangaFaceNetModel(ModelBase):
     def get_simple_backbone(self, main_input):
 
         layer_1 = tf.keras.layers.Convolution2D(32, (3, 3), padding='same', name='conv1')(main_input)
-        layer_1 = tf.keras.layers.BatchNormalization()(layer_1)
+        # layer_1 = tf.keras.layers.BatchNormalization()(layer_1)
         layer_1 = tf.keras.layers.ReLU()(layer_1)
         layer_1 = tf.keras.layers.MaxPooling2D((2, 2), strides=(2, 2), padding='same', name='pool1')(layer_1)
         layer_1 = tf.keras.layers.Dropout(0.25)(layer_1)
 
         layer_2 = tf.keras.layers.Convolution2D(64, (3, 3), padding='same', name='conv2')(layer_1)
-        layer_2 = tf.keras.layers.BatchNormalization()(layer_2)
+        # layer_2 = tf.keras.layers.BatchNormalization()(layer_2)
         layer_2 = tf.keras.layers.ReLU()(layer_2)
         layer_2 = tf.keras.layers.MaxPooling2D((2, 2), strides=(2, 2), padding='same', name='pool2')(layer_2)
         layer_2 = tf.keras.layers.Dropout(0.25)(layer_2)
 
         layer_3 = tf.keras.layers.Convolution2D(128, (3, 3), padding='same', name='conv3')(layer_2)
-        layer_3 = tf.keras.layers.BatchNormalization()(layer_3)
+        # layer_3 = tf.keras.layers.BatchNormalization()(layer_3)
         layer_3 = tf.keras.layers.ReLU()(layer_3)
 
         layer_4 = tf.keras.layers.Convolution2D(128, (3, 3), padding='same', name='conv4')(layer_3)
-        layer_4 = tf.keras.layers.BatchNormalization()(layer_4)
+        # layer_4 = tf.keras.layers.BatchNormalization()(layer_4)
         layer_4 = tf.keras.layers.ReLU()(layer_4)
 
         layer_5 = tf.keras.layers.Convolution2D(128, (3, 3), padding='same', name='conv5')(layer_4)
-        layer_5 = tf.keras.layers.BatchNormalization()(layer_5)
+        # layer_5 = tf.keras.layers.BatchNormalization()(layer_5)
         layer_5 = tf.keras.layers.ReLU()(layer_5)
         layer_5 = tf.keras.layers.MaxPooling2D((2, 2), strides=(2, 2), padding='same', name='pool3')(layer_5)
         layer_5 = tf.keras.layers.Dropout(0.25)(layer_5)

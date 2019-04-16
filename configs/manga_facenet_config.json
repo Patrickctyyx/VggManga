@@ -5,9 +5,10 @@
   "num_epochs": 50,
   "batch_size": 32,
   "num_classes": 2,
-  "backbone": "simple",
+  "backbone": "alexnet",
   "input_shape": 224,
   "input_channel": 1,
   "manga_dir": "MangaFaceNetDataset/facenetdata",
-  "with_bottom": 0
+  "with_bottom": 0,
+  "complex_top": 1
 }
