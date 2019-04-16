@@ -32,9 +32,9 @@ def train_vgg_manga():
     dl = FaceNetDL(config=config)
 
     print('[INFO] 构造网络…')
-    if config.backbone is 'vgg':
+    if config.backbone == 'vgg':
         print('[INFO] 使用 VGG 作为骨架')
-    elif config.backbone is 'alexnet':
+    elif config.backbone == 'alexnet':
         print('[INFO] 使用 AlexNet 作为骨架')
     else:
         print('[INFO] 使用多层 CNN 作为骨架')

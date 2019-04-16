@@ -19,9 +19,9 @@ class MangaFaceNetModel(ModelBase):
         main_input = tf.keras.Input(
             shape=(self.config.input_shape, self.config.input_shape, self.config.input_channel),
             name='input')
-        if self.config.backbone is 'alexnet':
+        if self.config.backbone == 'alexnet':
             backbone = self.get_alexnet_backbone(main_input)
-        elif self.config.backbone is 'vgg':
+        elif self.config.backbone == 'vgg':
             backbone = self.get_vgg_backbone(main_input)
         else:
             backbone = self.get_simple_backbone(main_input)
