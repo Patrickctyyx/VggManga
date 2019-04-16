@@ -45,7 +45,7 @@ class FaceNetDL(DataLoaderBase):
             rescale=1. / 255
         )
         test_generator = test_datagen.flow_from_directory(
-            os.path.join(self.root_path, self.manga_dir, 'test'),
+            os.path.join(self.root_path, self.manga_dir, 'testing'),
             target_size=(self.input_shape, self.input_shape),
             batch_size=self.config.batch_size
         )
