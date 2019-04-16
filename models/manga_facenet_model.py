@@ -63,19 +63,29 @@ class MangaFaceNetModel(ModelBase):
 
     def get_simple_backbone(self, main_input):
 
-        layer_1 = tf.keras.layers.Convolution2D(32, (3, 3), padding='same', activation='relu', name='conv1')(main_input)
+        layer_1 = tf.keras.layers.Convolution2D(32, (3, 3), padding='same', name='conv1')(main_input)
+        layer_1 = tf.keras.layers.BatchNormalization()(layer_1)
+        layer_1 = tf.keras.layers.ReLU()(layer_1)
         layer_1 = tf.keras.layers.MaxPooling2D((2, 2), strides=(2, 2), padding='same', name='pool1')(layer_1)
         layer_1 = tf.keras.layers.Dropout(0.25)(layer_1)
 
-        layer_2 = tf.keras.layers.Convolution2D(64, (3, 3), padding='same', activation='relu', name='conv2')(layer_1)
+        layer_2 = tf.keras.layers.Convolution2D(64, (3, 3), padding='same', name='conv2')(layer_1)
+        layer_2 = tf.keras.layers.BatchNormalization()(layer_2)
+        layer_2 = tf.keras.layers.ReLU()(layer_2)
         layer_2 = tf.keras.layers.MaxPooling2D((2, 2), strides=(2, 2), padding='same', name='pool2')(layer_2)
         layer_2 = tf.keras.layers.Dropout(0.25)(layer_2)
 
-        layer_3 = tf.keras.layers.Convolution2D(128, (3, 3), padding='same', activation='relu', name='conv3')(layer_2)
+        layer_3 = tf.keras.layers.Convolution2D(128, (3, 3), padding='same', name='conv3')(layer_2)
+        layer_3 = tf.keras.layers.BatchNormalization()(layer_3)
+        layer_3 = tf.keras.layers.ReLU()(layer_3)
 
-        layer_4 = tf.keras.layers.Convolution2D(128, (3, 3), padding='same', activation='relu', name='conv4')(layer_3)
+        layer_4 = tf.keras.layers.Convolution2D(128, (3, 3), padding='same', name='conv4')(layer_3)
+        layer_4 = tf.keras.layers.BatchNormalization()(layer_4)
+        layer_4 = tf.keras.layers.ReLU()(layer_4)
 
-        layer_5 = tf.keras.layers.Convolution2D(128, (3, 3), padding='same', activation='relu', name='conv5')(layer_4)
+        layer_5 = tf.keras.layers.Convolution2D(128, (3, 3), padding='same', name='conv5')(layer_4)
+        layer_5 = tf.keras.layers.BatchNormalization()(layer_5)
+        layer_5 = tf.keras.layers.ReLU()(layer_5)
         layer_5 = tf.keras.layers.MaxPooling2D((2, 2), strides=(2, 2), padding='same', name='pool3')(layer_5)
         layer_5 = tf.keras.layers.Dropout(0.25)(layer_5)
 

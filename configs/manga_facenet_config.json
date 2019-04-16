@@ -1,11 +1,11 @@
 {
-  "exp_name": "manga_facenet_alexnet",
+  "exp_name": "manga_facenet_simple",
   "lr": 0.01,
   "decay": 0.0,
   "num_epochs": 50,
   "batch_size": 32,
   "num_classes": 2,
-  "backbone": "alexnet",
+  "backbone": "simple",
   "input_shape": 224,
   "input_channel": 1,
   "manga_dir": "MangaFaceNetDataset/facenetdata",
