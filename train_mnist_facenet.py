@@ -53,7 +53,7 @@ def train_vgg_mnist():
         monitor='val_loss',
         mode='min',
         save_best_only=True)
-    model.fit_generate(
+    model.fit_generator(
         dl.get_train_data(),
         epochs=config.num_epochs,
         validation_data=dl.get_validation_data(),
