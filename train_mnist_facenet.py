@@ -50,7 +50,7 @@ def train_vgg_mnist():
     cp_callback = tf.keras.callbacks.ModelCheckpoint(
         os.path.join(model_save_path, 'mnist_facenet_weights.hdf5'),
         verbose=1, save_weights_only=False,
-        monitor='val_loss',
+        monitor='loss',
         mode='min',
         save_best_only=True)
     model.fit_generator(
