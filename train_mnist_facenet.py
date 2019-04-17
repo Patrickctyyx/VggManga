@@ -48,7 +48,7 @@ def train_vgg_mnist():
     model_save_path = 'experiments/mnist_facenet/checkpoints'
     mkdir_if_not_exist(model_save_path)
     cp_callback = tf.keras.callbacks.ModelCheckpoint(
-        model_save_path,
+        os.path.join(model_save_path, 'mnist_facenet_weights.hdf5'),
         verbose=1, save_weights_only=False,
         monitor='val_loss',
         mode='min',

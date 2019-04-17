@@ -47,10 +47,10 @@ def train_vgg_mnist():
     model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
     print('[INFO] 训练网络')
-    model_save_path = 'experiments/mnist_model/checkpoints'
+    model_save_path = 'experiments/mnist_model/checkpoints/'
     mkdir_if_not_exist(model_save_path)
     cp_callback = tf.keras.callbacks.ModelCheckpoint(
-        model_save_path,
+        os.path.join(model_save_path, 'mnist_weights.hdf5'),
         verbose=1, save_weights_only=False,
         monitor='val_loss',
         mode='min',
