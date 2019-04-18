@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from utils.utils import mkdir_if_not_exist
+import cv2
 import numpy as np
 import tensorflow as tf
 
@@ -13,8 +14,15 @@ def train_vgg_mnist():
     y_train = tf.keras.utils.to_categorical(y_train)
     y_test = tf.keras.utils.to_categorical(y_test)
 
-    x_train = np.expand_dims(x_train, axis=-1)
-    x_test = np.expand_dims(x_test, axis=-1)
+    x_train_new = []
+    x_test_new = []
+    for i in range(x_train.shape[0]):
+        x_train_new.append(cv2.resize(x_train[i], (32, 32)))
+    for i in range(x_test.shape[0]):
+        x_test_new.append(cv2.resize(x_test[i], (32, 32)))
+
+    x_train_new = np.expand_dims(x_train_new, axis=-1)
+    x_test_new = np.expand_dims(x_test_new, axis=-1)
 
     # x_train = np.resize(x_train, (x_train.shape[0], 48, 48, 3))
     # x_test = np.resize(x_test, (x_test.shape[0], 48, 48, 3))
@@ -55,10 +63,10 @@ def train_vgg_mnist():
         monitor='loss',
         mode='min',
         save_best_only=True)
-    model.fit(x_train, y_train, epochs=10, callbacks=[cp_callback])
+    model.fit(x_train_new, y_train, epochs=10, callbacks=[cp_callback])
 
     print('[INFO] 训练完成…')
-    model.evaluate(x_test, y_test)
+    model.evaluate(x_test_new, y_test)
 
 
 if __name__ == "__main__":

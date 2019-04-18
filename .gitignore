@@ -127,3 +127,4 @@ notebooks/
 *.ipynb
 utils/mk_dirs.py
 test_net.py
+test/
