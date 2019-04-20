@@ -19,7 +19,7 @@ def train_vgg_mnist():
     print('[INFO] 加载数据…')
     dl = FaceNetDL(config=config)
 
-    base_model = tf.keras.applications.vgg16.VGG16(weights=None, include_top=False)
+    base_model = tf.keras.applications.vgg16.VGG16(weights=None, include_top=False, input_shape=(224, 224, 3))
     x = base_model.output
     x = tf.keras.layers.Dense(64, activation='relu')(x)
     predictions = tf.keras.layers.Dense(2, activation='sigmoid')(x)
