@@ -4,7 +4,6 @@
 from utils.utils import mkdir_if_not_exist
 from utils.config_utils import process_config
 from data_loaders.facenet_dl import FaceNetDL
-import cv2
 import numpy as np
 import tensorflow as tf
 
