@@ -11,7 +11,7 @@ import tensorflow as tf
 def train_vgg_mnist():
 
     print('[INFO] 加载数据…')
-    config_str = 'configs/manga_facenet_config.json'
+    config_str = 'configs/try_vgg_manga.json'
     config = process_config(config_str)
 
     np.random.seed(47)
@@ -19,7 +19,7 @@ def train_vgg_mnist():
     print('[INFO] 加载数据…')
     dl = FaceNetDL(config=config)
 
-    base_model = tf.keras.applications.vgg16.VGG16(weights=None, include_top=False, input_shape=(224, 224, 3))
+    base_model = tf.keras.applications.vgg16.VGG16(weights=None, include_top=False, input_shape=(224, 224, 1))
     x = base_model.output
     x = tf.keras.layers.Dense(64, activation='relu')(x)
     predictions = tf.keras.layers.Dense(2, activation='sigmoid')(x)
