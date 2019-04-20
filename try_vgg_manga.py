@@ -22,7 +22,7 @@ def train_vgg_mnist():
     base_model = tf.keras.applications.vgg16.VGG16(weights=None, include_top=False, input_shape=(224, 224, 1))
     x = base_model.output
     x = tf.keras.layers.Flatten()(x)
-    x = tf.keras.layers.Dense(64, activation='relu')(x)
+    x = tf.keras.layers.Dense(config.fc1_num, activation='relu')(x)
     predictions = tf.keras.layers.Dense(2, activation='sigmoid')(x)
 
     model = tf.keras.Model(inputs=base_model.input, outputs=predictions)
