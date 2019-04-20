@@ -8,5 +8,5 @@
   "input_shape": 224,
   "manga_dir": "MangaFaceNetDataset/facenetdata",
   "input_channel": 1,
-  "fc1_num": 32
+  "fc1_num": 16
 }
