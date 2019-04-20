@@ -20,9 +20,9 @@ class FaceNetDL(DataLoaderBase):
     def generate_train_val(self):
         train_datagen = tf.keras.preprocessing.image.ImageDataGenerator(
             rescale=1. / 255,
-            shear_range=0.2,
-            zoom_range=0.2,
-            horizontal_flip=True,
+            # shear_range=0.2,
+            # zoom_range=0.2,
+            # horizontal_flip=True,
             validation_split=0.2
         )
         train_generator = train_datagen.flow_from_directory(
